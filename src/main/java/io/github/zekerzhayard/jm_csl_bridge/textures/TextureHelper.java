@@ -131,7 +131,7 @@ public class TextureHelper {
                     } catch (Throwable t) {
                         throw new RuntimeException(t);
                     }
-                    
+
                     TextureImpl textureImpl;
                     synchronized (TextureCache.playerSkins) {
                         textureImpl = TextureCache.playerSkins.get(name);
