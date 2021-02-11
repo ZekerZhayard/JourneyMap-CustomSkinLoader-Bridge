@@ -20,13 +20,27 @@ jobs:
         run: ./gradlew.bat setupCIWorkspace -iS
       - name: Build with Gradle
         run: ./gradlew.bat build -iS
+      - name: Get tag version
+        id: get_version
+        uses: olegtarasov/get-tag@v2.1
       - uses: actions/upload-artifact@v2
         with:
           name: Package
           path: build/libs
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_version.outputs.tag }}
+          release_name: ${{ steps.get_version.outputs.tag }}
+          body: ''
+          draft: false
+          prerelease: false
       - name: Upload release binaries
         uses: alexellis/upload-assets@0.2.2
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           asset_paths: '["./build/libs/*"]'
