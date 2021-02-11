@@ -19,6 +19,8 @@ jobs:
       - name: Setup CI workspace
         run: ./gradlew.bat setupCIWorkspace -iS
       - name: Build with Gradle
+        env:
+          IS_PUBLICATION: true
         run: ./gradlew.bat build -iS
       - name: Get tag version
         id: get_version
