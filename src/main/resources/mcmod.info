@@ -1,0 +1,21 @@
+[
+  {
+    "modid": "jm_csl_bridge",
+    "name": "JourneyMap_CustomSkinLoader_Bridge",
+    "description": "A mod to load player icons from CustomSkinLoader in JourneyMap.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/ZekerZhayard/JourneyMap-CustomSkinLoader-Bridge",
+    "updateUrl": "",
+    "authorList": [
+      "ZekerZhayard"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": [
+      "[customskinloader@14.13-SNAPSHOT-218,)",
+      "[journeymap@1.12.2-5.7.1,)"
+    ]
+  }
+]

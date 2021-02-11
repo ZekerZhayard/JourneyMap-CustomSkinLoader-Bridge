@@ -1,0 +1,40 @@
+name: Publication
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8.0.282'
+          architecture: x64
+      - name: Set up CI workspace
+        run: ./gradlew.bat setupCIWorkspace -iS
+      - name: Build with Gradle
+        run: ./gradlew.bat build -iS
+      - name: Get tag version
+        id: get_version
+        uses: olegtarasov/get-tag@v2.1
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Package
+          path: build/libs
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_version.outputs.tag }}
+          release_name: ${{ steps.get_version.outputs.tag }}
+          body: ''
+          draft: false
+          prerelease: false
