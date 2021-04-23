@@ -1,9 +1,9 @@
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
         maven {
             name = "forge"
-            url = "https://files.minecraftforge.net/maven"
+            url = "https://maven.minecraftforge.net/"
         }
     }
     dependencies {
@@ -54,9 +54,15 @@ repositories {
     }
 }
 
+repositories.each {
+    if (it instanceof MavenArtifactRepository && it.url.toString() == "https://files.minecraftforge.net/maven") {
+        it.url = "https://maven.minecraftforge.net/"
+    }
+}
+
 dependencies {
     deobfCompile "curse.maven:journeymap-32274:2916002"
-    deobfCompile "mods:CustomSkinLoader_Forge:14.13-SNAPSHOT-218"
+    deobfCompile "mods:CustomSkinLoader_Forge:14.13-SNAPSHOT-253"
 }
 
 jar {

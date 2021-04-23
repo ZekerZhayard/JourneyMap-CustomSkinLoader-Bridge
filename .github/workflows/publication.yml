@@ -11,14 +11,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK
+      - name: Setup JDK
         uses: actions/setup-java@v1
         with:
-          java-version: '8.0.282'
+          java-version: '8.0.292'
           architecture: x64
-      - name: Set up CI workspace
+      - name: Setup CI workspace
         run: ./gradlew.bat setupCIWorkspace -iS
       - name: Build with Gradle
+        env:
+          IS_PUBLICATION: true
         run: ./gradlew.bat build -iS
       - name: Get tag version
         id: get_version
@@ -38,3 +40,9 @@ jobs:
           body: ''
           draft: false
           prerelease: false
+      - name: Upload release binaries
+        uses: alexellis/upload-assets@0.2.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_paths: '["./build/libs/*"]'
